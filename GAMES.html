@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="GAMES.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+
+<link href='https://unpkg.com/css.gg@2.0.0/icons/css/add.css' rel='stylesheet'>
+
+<link href='https://unpkg.com/css.gg@2.0.0/icons/css/digitalocean.css' rel='stylesheet'>
+
+<link href='https://unpkg.com/css.gg@2.0.0/icons/css/folder.css' rel='stylesheet'>
+
+<script src="GAMES.js"></script>
+
+</head>
+<body>
+    <h1> <button class="gg-add"> </button>new game</h1>
+    <div id="player1">
+        <p>Player 1</p>
+        <div class="container-score">
+            <div class="score"> 
+                <P id="A">0</P>
+            </div>
+        </div>
+        
+        <div id="curent-container">
+            <div class="curent"><P id="A-A">0</P></div>
+            </div>
+        </div>
+<div id="dée-container"> 
+    <div id="dée"></div>
+</div>
+    <div id="button-container">
+       <button id="roll"> <div class="gg-digitalocean"></div>ROLL DICE</button>
+        <button id="hold"><div class="gg-folder"></div>HOLD</button>
+      </div>
+      
+
+    <div id="player2">
+        <p>Player 2</p>
+        <div class="container-score">
+            <div class="score">
+                <P id="B">0</P>
+            </div>
+        </div>
+        <div id="curent-container">
+        <div class="curentt"><P id="B-B">0</P></div>
+        </div>
+        </div>
+        <script>
+        let currentPlayer = 0;
+        let currentScore = [0, 0];
+        const winningScore = 100;
+        
+        const rollButton = document.getElementById("roll");
+        const resultDiv = document.getElementById("dée");
+        const currentDiv = document.getElementsByClassName("curent")[0].getElementsByTagName("p")[0];
+        const currentDivt = document.getElementsByClassName("curentt")[0].getElementsByTagName("p")[0];
+        
+        rollButton.addEventListener("click", function() {
+          let randomNumber = Math.floor(Math.random() * 6) + 1;
+          resultDiv.innerHTML = `<img src="images/face${randomNumber}.png">`;
+        
+          if (randomNumber === 1) {
+            currentScore[currentPlayer] = 0;
+          } else {
+            currentScore[currentPlayer] += randomNumber;
+          }
+        
+          if (currentPlayer === 0) {
+            currentDiv.innerHTML = `${currentScore[currentPlayer]}`;
+          } else {
+            currentDivt.innerHTML = `${currentScore[currentPlayer]}`;
+          }
+        
+          currentPlayer = (currentPlayer + 1) % 2;
+        });
+        
+        const holdButton = document.getElementById("hold");
+        const scoreADiv = document.getElementById("A");
+        const scoreBDiv = document.getElementById("B");
+        
+        holdButton.addEventListener("click", function() {
+          if (currentPlayer === 0) {
+            scoreADiv.innerHTML = parseInt(scoreADiv.innerHTML) + currentScore[currentPlayer];
+            currentDiv.innerHTML = 0;
+          } else {
+            scoreBDiv.innerHTML = parseInt(scoreBDiv.innerHTML) + currentScore[currentPlayer];
+            currentDivt.innerHTML = 0;
+          }
+        
+          currentScore[currentPlayer] = 0;
+          currentPlayer = (currentPlayer + 1) % 2;
+        
+          if (parseInt(scoreADiv.innerHTML) >= winningScore) {
+            alert("Player 1 wins!");
+            location.reload();
+          } else if (parseInt(scoreBDiv.innerHTML) >= winningScore) {
+            alert("Player 2 wins!");
+            location.reload();
+          }
+        });
+
+        const refreshButton = document.querySelector(".gg-add");
+
+refreshButton.addEventListener("click", function() {
+  location.reload();
+});
+
+</script>        
+   
+            
+            
+            
+</body>
+</html>
